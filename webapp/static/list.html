@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>Java05 -云课堂</title>
+		
+		<link href="../res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="../res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="../res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="../res/js/bootstrap.min.js"></script>
+		
+		<!--[if lt IE 9]>
+		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<link rel="icon" type="image/png" href="../res/i/SSTC.jpg" sizes="16x16">
+		<script type="text/javascript">
+		CONETXT_PATH = '';
+		</script>
+	</head>
+
+	<body>
+		<!-- 头部-start -->
+		<div class="f-header">
+			<div class="f-header-box clearfix">
+				<a href=".."  class="logo" title="云课堂"></a>
+				<nav class="header-nav">
+					<a href=".." class="header-nav-item">首 页</a>
+					<a href="../course/list.html" class="header-nav-item">课 程</a>
+					<a href="../user/home.html" class="header-nav-item">我的</a>
+					<a href="../opt/index.html"  style="width:100px;" target="_blank" class="header-nav-item">运营CMS</a>
+				</nav>
+				
+				<nav class="header-nav" style="float:right">
+					<a href="#myModal" class="header-nav-item"  data-toggle="modal" onclick="login();"  style="margin-right:0px;font-size:14px;">登录</a>
+					<a href="../auth/register.html" class="header-nav-item"   style="margin-left:0px;font-size:14px;">注册</a>
+			        <a href="#" class="header-nav-item"  style="margin-left:0px;font-size:14px;" id="userdetail">头像</a>
+				</nav>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function login(){
+				$('#loginTitle').css('color','#337Ab7');
+				$('#loginForm').show();
+				$('#registeTitle').css('color','#000');
+				$('#registeForm').hide();
+			}
+			function registe(){
+				$('#loginTitle').css('color','#000');
+				$('#loginForm').hide();
+				$('#registeTitle').css('color','#337Ab7');
+				$('#registeForm').show();
+			}
+			$(function(){
+				$("#userdetail").popover({
+		            trigger:'manual',
+		            placement : 'bottom',
+		            html: 'true',
+		            content : '<div style="width:300px;height:300px;"></div>',
+		            animation: false
+		        }).on("mouseenter", function () {
+		            var _this = this;
+		            $(this).popover("show");
+		            $(this).siblings(".popover").on("mouseleave", function () {
+		                $(_this).popover('hide');
+		            });
+		        }).on("mouseleave", function () {
+		            var _this = this;
+		            setTimeout(function () {
+		                if (!$(".popover:hover").length) {
+		                    $(_this).popover("hide")
+		                }
+		            }, 0);
+		        });
+				//课程分类展示 
+				$(".category").popover({
+		            trigger:'manual',
+		            placement : 'right',
+		            html: 'true',
+		            content : '',
+		            animation: false
+		        }).on("mouseenter", function () {
+		            var cid = $(this).attr('c-id');
+		            $('#' + cid).show();
+		            $('#' + cid).hover(function(){
+		            	$('#' + cid).show();
+		            },function(){
+		            	$('#' + cid).hide();
+					});
+		        }).on("mouseleave", function () {
+		            var cid = $(this).attr('c-id');
+		            $('#' + cid).hide();
+		        });
+			});
+		</script>
+		<!-- 头部-end -->
+		
+		<!-- 登录注册-start -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  style="position:fixed; top:30%;">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		        
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true" style="font-size:18px;">×</span>
+		                </button>
+		                <h4 class="modal-title"  id="loginTitle"  style="float: left; color: #337Ab7;cursor: pointer; " onclick="login();">登 录</h4>
+		                <h4 class="modal-title"  id="registeTitle"  style="float: left;margin-left: 20px;cursor: pointer;" onclick="registe();">注 册</h4>
+		                <div class="clearfix"></div>
+		            </div>
+		            
+		            <div class="modal-body">
+		               	<form id="loginForm" class="form-horizontal" style="padding: 0px 20px;">
+		                      <div class="form-group">
+		                          <input type="email" class="form-control"  id="username"  placeholder="用户名">
+		                      </div>
+		                      <div class="form-group help">
+		                          <input type="password" class="form-control"  id="password"  placeholder="密　码">
+		                      </div>
+		                      <div class="form-group">
+		                          <label>
+		                           <input type="checkbox" value="None" id="checkbox1" name="check">
+		                           <span class="text" style="color: #787D82;font-size: 14px;">下次自动登录</span>
+		                          </label>
+		                      </div>
+		                      
+		                      <a href="javascript:void(0)">
+		                      	<div class="header-login-btn">登 录</div>
+		                      </a>
+		                  </form>
+		                  
+		                   <form id="registeForm" class="form-horizontal" style="padding: 0px 20px;display: none;">
+		                       <div class="form-group">
+		                           <input type="email" class="form-control"  id="username"  placeholder="用户名">
+		                       </div>
+		                       <div class="form-group help">
+		                           <input type="password" class="form-control"  id="password"  placeholder="密　码">
+		                       </div>
+		                       <a href="javascript:void(0)">
+		                      	<div class="header-login-btn">注 册</div>
+		                       </a>
+		                   </form>
+		                  
+		            </div>
+					
+		        </div>
+		    </div>
+		</div>
+		<!-- 登录注册-end -->
+
+
+		
+		<div class="f-main clearfix">
+			<!-- 一级分类-start -->
+			<div class="course-nav-row clearfix">
+				<span class="hd">方向：</span>
+				<ul class="course-nav">
+					<li class="course-nav-item cur-course-nav">
+						<a href="/course/list">全部</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=fe">数据结构</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=be">计算机网络</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=mobile" >系统测试</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=data" >业务需求</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=cb" >水课通识</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=op" >大学物理</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >篮球教学</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 一级分类-end -->
+			
+			<!-- 二级分类-start -->
+			<div class="course-nav-row clearfix">
+				<span class="hd">分类：</span>
+				<ul class="course-nav">
+					<li class="course-nav-item cur-course-nav">
+						<a href="/course/list">全部</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=fe">C/C++</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=be">Java</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=mobile" >JavaScript</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=data" >Python</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=cb" >SQL</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=op" >PHP</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Go</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >C#</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Ruby</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >汇编语言</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >易语言</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Matlab</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Visual Basic</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Swift</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 二级分类-end -->
+			
+			<!-- 课程列表-start -->
+			<h3 style="margin-bottom: 20px;">
+				<span class="types-title" style="margin-right:40px;">课程列表</span>
+				<a href="javascript:void(0)" style="display: inline-block;margin-right:20px;" onclick="_queryPage(1,undefined,'last')">
+					<span >最新</span>
+				</a>
+				<a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
+					<span >最热</span>
+				</a>
+			</h3>
+
+			<a href="">
+				<div class="course-card-container">
+					<div class="course-card-top green-bg">
+						<span>系统测试</span>
+					</div>
+
+					<div class="course-card-content">
+						<h3 class="course-card-name">静态测试与FMEA</h3>
+						<p title="解哥手把手教会你如何使用静态测试与FMEA技术秒杀高考英语改错题型">解哥手把手教会你如何使用静态测试 与FMEA技术秒杀高考英语改错题型</p>
+						<div class="course-card-bottom">
+							<div class="course-card-info">178人在学</div>
+							<div class="course-card-price">￥179.00</div>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<a href="">
+				<div class="course-card-container">
+					<div class="course-card-top pink-bg">
+						<span>篮球教学</span>
+					</div>
+					<div class="course-card-content">
+						<h3 class="course-card-name">基础过人技巧</h3>
+						<p title="基于变向、胯下、背后、转身、虚晃、假动作的过人训练，上限gxy下限王政浩，单吃徐国瑞不是梦">基于变向、胯下、背后、转身、虚晃、假动作的过人训练，上限gxy下限王政浩，单吃徐国瑞不是梦</p>
+						<div class="clearfix course-card-bottom">
+							<div class="course-card-info">344人在学</div>
+
+							<div class="course-card-price">￥99.00</div>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<a href="">
+				<div class="course-card-container">
+					<div class="course-card-top brown-bg">
+						<span>业务需求</span>
+					</div>
+
+					<div class="course-card-content">
+						<h3 class="course-card-name">业务需求建墓</h3>
+						<p title="大左教你如何成为会内卷的程序员">大左教你如何成为会内卷的程序员</p>
+						<div class="clearfix course-card-bottom">
+							<div class="course-card-info">488人在学</div>
+							<div class="course-card-price">￥369.00</div>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<a href="">
+				<div class="course-card-container">
+					<div class="course-card-top purple-bg">
+						<span>Advanced English</span>
+					</div>
+
+					<div class="course-card-content">
+						<h3 class="course-card-name">Stretch教学</h3>
+						<p title="James与Jokic的梦幻联动，带你领略体前屈40的高难度Stretch">James与Jokic的梦幻联动，带你领略体前屈40的高难度Stretch</p>
+						<div class="clearfix course-card-bottom">
+							<div class="course-card-info">813人在学</div>
+							<div class="course-card-price">￥168.00</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="course-card-container" style="margin-right: 0px;">
+					<div class="course-card-top green-bg">
+						<span>水课通识</span>
+					</div>
+
+					<div class="course-card-content">
+						<h3 class="course-card-name">水课技术大观</h3>
+						<p title="教会你使用虚拟定位，脚本刷课，以及题库破解等技术更好的水好每节课">教会你使用虚拟定位，脚本刷课，以及题库破解等技术更好的水好每节课</p>
+						<div class="clearfix course-card-bottom">
+							<div class="course-card-info">中级<span>·</span>6133人在学</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="types-content clearfix">
+
+					<a href="">
+						<div class="course-card-container">
+							<div class="course-card-top green-bg">
+								<span>系统测试</span>
+							</div>
+
+							<div class="course-card-content">
+								<h3 class="course-card-name">静态测试与FMEA</h3>
+								<p title="解哥手把手教会你如何使用静态测试与FMEA技术秒杀高考英语改错题型">解哥手把手教会你如何使用静态测试 与FMEA技术秒杀高考英语改错题型</p>
+								<div class="course-card-bottom">
+									<div class="course-card-info">178人在学</div>
+									<div class="course-card-price">￥179.00</div>
+								</div>
+							</div>
+						</div>
+					</a>
+
+					<a href="">
+						<div class="course-card-container">
+							<div class="course-card-top pink-bg">
+								<span>篮球教学</span>
+							</div>
+							<div class="course-card-content">
+								<h3 class="course-card-name">基础过人技巧</h3>
+								<p title="基于变向、胯下、背后、转身、虚晃、假动作的过人训练，上限gxy下限王政浩，单吃徐国瑞不是梦">基于变向、胯下、背后、转身、虚晃、假动作的过人训练，上限gxy下限王政浩，单吃徐国瑞不是梦</p>
+								<div class="clearfix course-card-bottom">
+									<div class="course-card-info">344人在学</div>
+
+									<div class="course-card-price">￥99.00</div>
+								</div>
+							</div>
+						</div>
+					</a>
+
+					<a href="">
+						<div class="course-card-container">
+							<div class="course-card-top brown-bg">
+								<span>业务需求</span>
+							</div>
+
+							<div class="course-card-content">
+								<h3 class="course-card-name">业务需求建墓</h3>
+								<p title="大左教你如何成为会内卷的程序员">大左教你如何成为会内卷的程序员</p>
+								<div class="clearfix course-card-bottom">
+									<div class="course-card-info">488人在学</div>
+									<div class="course-card-price">￥369.00</div>
+								</div>
+							</div>
+						</div>
+					</a>
+
+					<a href="">
+						<div class="course-card-container">
+							<div class="course-card-top purple-bg">
+								<span>Advanced English</span>
+							</div>
+
+							<div class="course-card-content">
+								<h3 class="course-card-name">Stretch教学</h3>
+								<p title="James与Jokic的梦幻联动，带你领略体前屈40的高难度Stretch">James与Jokic的梦幻联动，带你领略体前屈40的高难度Stretch</p>
+								<div class="clearfix course-card-bottom">
+									<div class="course-card-info">813人在学</div>
+									<div class="course-card-price">￥168.00</div>
+								</div>
+							</div>
+						</div>
+
+					<div class="course-card-container" style="margin-right: 0px;">
+						<div class="course-card-top green-bg">
+							<span>水课通识</span>
+						</div>
+
+						<div class="course-card-content">
+							<h3 class="course-card-name">水课技术大观</h3>
+							<p title="教会你使用虚拟定位，脚本刷课，以及题库破解等技术更好的水好每节课">教会你使用虚拟定位，脚本刷课，以及题库破解等技术更好的水好每节课</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">中级<span>·</span>6133人在学</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- 课程列表-end -->
+			
+			<!-- 分页-start -->
+			<div class="page-box clearfix">
+				<div class="page clearfix">
+					<div style="float:left;">
+						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a>
+						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
+						<a class="page-cur" href="javascript:void(0);" >1</a>
+						<a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">2</a>
+						<a class="page-num" href="javascript:void(0);" >3</a>
+						<a class="page-num" href="javascript:void(0);" >4</a>
+						<a class="page-num" href="javascript:void(0);" >5</a>
+						<a class="page-num" href="javascript:void(0);" >6</a>
+						<a class="page-num" href="javascript:void(0);" >7</a>
+						<span class="page-omit">...</span>
+						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageNum+1}')">下一页</a> 
+						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a> 
+					</div>
+				</div>
+			</div>
+			<!-- 分页-end -->	
+		</div>
+		
+		<div class="f-footer">
+		<div class="f-footer-box clearfix">
+		<div class="footer-link">
+			<a href="javascript:void(0);"  target="_blank" title="企业合作">企业合作</a> 
+			<a href="javascript:void(0);" target="_blank" title="联系我们">联系我们</a> 
+			<a href="javascript:void(0);" target="_blank" title="常见问题">常见问题</a> 
+			<a href="javascript:void(0);" target="_blank" title="意见反馈">意见反馈</a>
+			<a href="javascript:void(0);" target="_blank" title="友情链接">友情链接</a>
+		</div>
+		<div class="footer-copyright">
+			<span>©&nbsp;2021&nbsp; 备案 </span>
+		</div>
+	</div>
+</div>
+	</body>
+	
+</html>
